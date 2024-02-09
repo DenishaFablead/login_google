@@ -16,17 +16,17 @@ class custome_textfield extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0,horizontal: 00),
       child: Container(
-        height: Get.height/14,width: Get.width,
+        height: Get.height/15,width: Get.width,
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(.1),
         borderRadius: BorderRadius.circular(10)
       ),
       child: TextField(
-      
         controller: Controlle,
-        style: TextStyle(color: Colors.black,fontWeight: FontWeight.w900),
+        style: TextStyle(color: Colors.black,fontWeight: FontWeight.w900,fontSize: 22),
         cursorColor: Colors.black,
 
+        // cursorHeight: 20,
         decoration: InputDecoration(
             // border: InputBorder.none,
             focusedBorder: InputBorder.none,
@@ -39,9 +39,10 @@ class custome_textfield extends StatelessWidget {
             child: Icon(icon,color: Colors.black.withOpacity(.2),size: 16),
         
           ) ,
+
           suffixIcon: IconButton(onPressed: () {
             Controlle!.clear();
-          }, icon: Icon(FontAwesomeIcons.x,color: Colors.black,size: 22)),
+          }, icon: Icon(FontAwesomeIcons.x,color: Colors.black.withOpacity(.2),size: 18)),
             label: Text("${text}",style: TextStyle(color: Colors.black.withOpacity(.8),fontSize:16, ),)),
       ),
       ),
