@@ -3,14 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:login_google/firebase_options.dart';
+import 'package:login_google/screen/invoice.dart';
 import 'package:login_google/service/ems_service.dart';
 // import 'package:google_with_login/firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_paypal/flutter_paypal.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
+import 'package:get/get.dart';
 
 SharedPreferences? sp;
 User? user;
@@ -26,7 +25,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       home: sp!.getBool('gmail') == true ? Guser() : name(),
       // home: razor_pay(),
       debugShowCheckedModeBanner: false,
@@ -80,15 +79,14 @@ class _nameState extends State<name> {
                 child: const Text("Gmail With Login"),
               ),
             ),
-          //    Center(
-          //     child: OutlinedButton(
-          //       onPressed: () async {
-          //  final data=await _emsPdfService.GeneratePdf();
-          //  _emsPdfService.savePdffile("one pdf", data);
-          //       },
-          //       child: const Text("invoice"),
-          //     ),
-          //   ),
+             Center(
+              child: OutlinedButton(
+                onPressed: () async {
+                    Get.to(InvoiceScreen());
+                },
+                child: const Text("invoice"),
+              ),
+            ),
           ],
         ),
       ),
@@ -418,81 +416,6 @@ class _GuserState extends State<Guser> {
       builder: (BuildContext context) {
         return alert;
       },
-    );
-  }
-}
-
-class razor_pay extends StatefulWidget {
-  const razor_pay({super.key});
-
-  @override
-  State<razor_pay> createState() => _razor_payState();
-}
-
-class _razor_payState extends State<razor_pay> {
-  Razorpay? _razorpay;
-
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    Fluttertoast.showToast(
-        msg: "SUCCESS PAYMENT:${response.paymentId}", timeInSecForIosWeb: 4);
-  }
-
-  void _handlePaymentError(PaymentFailureResponse response) {
-    Fluttertoast.showToast(
-        msg: "ERROR HERE:${response.code} - ${response.message}",
-        timeInSecForIosWeb: 4);
-  }
-
-  void _handlePaymentWallet(ExternalWalletResponse response) {
-    Fluttertoast.showToast(
-        msg: "EXTERNAL_WALLET IS:${response.walletName}",
-        timeInSecForIosWeb: 4);
-  }
-
-  void MakePayment() async {
-    var options = {
-      'key': 'rzp_test_ZgBWoDTTjFrdoi',
-      'amount': 100,
-      'name': 'Acme Corp.',
-      'timeout': 120,
-      'description': 'Fine T-Shirt',
-      'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'}
-    };
-    try {
-      _razorpay?.open(options);
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _razorpay = Razorpay();
-    _razorpay?.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    _razorpay?.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    _razorpay?.on(Razorpay.EVENT_EXTERNAL_WALLET, _handlePaymentWallet);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          SizedBox(
-            height: 50,
-          ),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                MakePayment();
-              },
-              child: Text("BUY"),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
