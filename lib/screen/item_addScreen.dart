@@ -17,7 +17,7 @@ class item_addScreen extends StatefulWidget {
 
 class _item_addScreenState extends State<item_addScreen> {
   final InvoiceController controller = Get.put(InvoiceController());
-
+bool adddata=false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,43 +34,68 @@ class _item_addScreenState extends State<item_addScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              font_(font: "Item Name",color: Colors.black,fontsize: Get.width/26),
+              font_(font: "Item Name",color: Colors.black,fontsize: Get.width/26,),
               SizedBox(height: 5),
-              custome_textfield(Controlle: controller.itemNameController,icon:Icons.person,text: "Enter Item Name")
+              custome_textfield(Controlle: controller.itemNameController,icon:Icons.person,text: "Enter Item Name",keyboardType:TextInputType.name )
               ,
               SizedBox(height: 10.0),
               font_(font: "Item Quantity",color: Colors.black,fontsize: Get.width/26),
               SizedBox(height: 5),
-              custome_textfield(Controlle: controller.itemQuantityController,icon:Icons.person,text: "Enter Item Quantity")
+              custome_textfield(Controlle: controller.itemQuantityController,icon:Icons.person,text: "Enter Item Quantity" ,keyboardType: TextInputType.number)
               ,
               SizedBox(height: 10.0),
               font_(font: "Item price",color: Colors.black,fontsize: Get.width/26),
               SizedBox(height: 5),
-              custome_textfield(Controlle: controller.itemPriceController,icon:Icons.person,text: "Enter Item Price"),
+              custome_textfield(Controlle: controller.itemPriceController,icon:Icons.person,text: "Enter Item Price",keyboardType: TextInputType.number),
               SizedBox(height: 20.0),
-              InkWell(
-                onTap:  () {
-                  Get.to(pre_viewInvoiceScreen());
-                },
-                child: Center(child:
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.deepPurple.shade50,
-                      borderRadius: BorderRadius.circular(10)
+               SizedBox(
+                width: Get.width,
+                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                   children: [
+                     InkWell(
+                      onTap: controller.addItem,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(.2),
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text("Add more ",style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w900
+                          )),
+                        ),
+                      ),
+                                   ),
+                                   SizedBox(height:5 ,),
+                 
+                                   InkWell(
+                  onTap:  () {
+                    Get.to(pre_viewInvoiceScreen());
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(.2),
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text("Genreat Invoice",style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.w900
+                      )),
+                    ),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Text("Genreat Invoice",style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w900
-                    )),
-                  ),
-                ),),
-              ),
-              ElevatedButton(
-                onPressed: controller.addItem,
-                child: Text('Add Item'),
-              ),
+                               ),
+                   ],
+                 ),
+               ),
+               
+              
+           
               Obx(() => DataTable(
                 columns: [
                   DataColumn(label: Text('Item')),
@@ -91,10 +116,10 @@ class _item_addScreenState extends State<item_addScreen> {
                 }).toList(),
               )),
               SizedBox(height: 20.0),
-              Obx(() => Text(
-                'Total: \$${controller.calculateTotal().toStringAsFixed(2)}',
-                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-              )),
+              // Obx(() => Text(
+              //   'Total: \$${controller.calculateTotal().toStringAsFixed(2)}',
+              //   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              // )),
         
             ],
           ),

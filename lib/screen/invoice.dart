@@ -27,17 +27,17 @@ class InvoiceScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-               font_(font: "Customer  Name",color: Colors.black,fontsize: Get.width/26),
+               font_(font: "Customer  email",color: Colors.black,fontsize: Get.width/26),
              SizedBox(height: 5),
-             custome_textfield(Controlle: controller.customerNameController,icon:Icons.person,text: "Enter your name ")
+             custome_textfield(Controlle: controller.customerNameController,icon:Icons.person,text: "Enter your Email ",keyboardType: TextInputType.emailAddress)
           ,    SizedBox(height: 10.0),
               font_(font: "Customer  Number",color: Colors.black,fontsize: Get.width/26),
               SizedBox(height: 5),
-              custome_textfield(Controlle: controller.customerNumberController,icon:Icons.person,text: "Enter Number")
+              custome_textfield(Controlle: controller.customerNumberController,icon:Icons.person,text: "Enter Number",keyboardType:TextInputType.number )
               ,    SizedBox(height: 10.0),
               font_(font: "Customer  Address",color: Colors.black,fontsize: Get.width/26),
               SizedBox(height: 5),
-              custome_textfield(Controlle: controller.customerAddrController,icon:Icons.person,text: "Enter ADDRESS")
+              custome_textfield(Controlle: controller.customerAddrController,icon:Icons.person,text: "Enter Address",keyboardType: TextInputType.streetAddress)
               ,    SizedBox(height: 20.0),
               // ,
               // TextField(
@@ -60,7 +60,7 @@ class InvoiceScreen extends StatelessWidget {
                 child: Center(child:
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.deepPurple.shade50,
+                    color: Colors.black.withOpacity(.2),
                     borderRadius: BorderRadius.circular(10)
                   ),
                   child: Padding(

@@ -38,6 +38,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 class InvoiceController extends GetxController {
   var items = <InvoiceItem>[].obs;
+  
   TextEditingController customerNameController = TextEditingController();
   TextEditingController customerNumberController = TextEditingController();
   TextEditingController customerAddrController = TextEditingController();
