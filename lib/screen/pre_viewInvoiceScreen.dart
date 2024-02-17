@@ -26,6 +26,7 @@ class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white ,
       appBar: AppBar(),
       body: SingleChildScrollView(
         child: Column(
@@ -135,17 +136,38 @@ class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
             Obx(() => Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: DataTable(
+                    showBottomBorder: false,
+                    dividerThickness: .0,
                     dataRowHeight: Get.height / 20,
+                    border: TableBorder.all(color: Colors.white),
                     headingRowColor: MaterialStateColor.resolveWith((states) {
                       // You can set the color conditionally based on the state if needed
                       return Colors.grey
                           .shade100; // Change the color as per your preference
                     }),
                     columns: [
-                      DataColumn(label: Text('Item')),
-                      DataColumn(label: Text('Price')),
-                      DataColumn(label: Text('Quantity')),
-                      DataColumn(label: Text('Total')),
+                      DataColumn(
+                          label: Text(
+                        'Item',
+                        style: TextStyle(
+                          fontFamily: 'DMSerifDisplay-Regular',
+                        ),
+                      )),
+                      DataColumn(
+                          label: Text('Price',
+                              style: TextStyle(
+                                fontFamily: 'DMSerifDisplay-Regular',
+                              ))),
+                      DataColumn(
+                          label: Text('Quantity',
+                              style: TextStyle(
+                                fontFamily: 'DMSerifDisplay-Regular',
+                              ))),
+                      DataColumn(
+                          label: Text('Total',
+                              style: TextStyle(
+                                fontFamily: 'DMSerifDisplay-Regular',
+                              ))),
                     ],
                     rows: controller.items.map((item) {
                       double totalForItem = item.price * item.quantity;
@@ -215,12 +237,14 @@ class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
                                     'Total ',
                                     style: TextStyle(
                                         fontSize: 18.0,
+                                        fontFamily: 'DMSerifDisplay-Regular',
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Text(
                                     '\$${controller.calculateTotal().toStringAsFixed(2)}',
                                     style: TextStyle(
                                         fontSize: 18.0,
+                                        fontFamily: 'DMSerifDisplay-Regular',
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ],
@@ -483,55 +507,117 @@ class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
                 ),
               ),
             ),
+            pw.SizedBox(
+              height: 5,
+            ),
             pw.Padding(
               padding: const pw.EdgeInsets.symmetric(horizontal: 8.0),
               child: pw.Container(
                 decoration: pw.BoxDecoration(
-      color: PdfColor.fromHex('#FFFFFF'), // Background color of the table
-    ),
+                  color: PdfColor.fromHex(
+                      '#FFFFFF'), // Background color of the table
+                ),
                 child: pw.Table(
-               tableWidth: pw.TableWidth.max,
-border: pw.TableBorder.all(width: 0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-),
+                  tableWidth: pw.TableWidth.max,
+                  border:
+                      pw.TableBorder.all(color: PdfColor.fromHex('#FFFFFF')),
                   children: [
                     // Table header
                     pw.TableRow(
-                     decoration: pw.BoxDecoration(
-            color: PdfColor.fromHex('#F5F5F5'),
-          ),
+                      decoration: pw.BoxDecoration(
+                        color: PdfColor.fromHex('#F5F5Ff'),
+                      ),
                       children: [
-                        pw.Padding(padding: const pw.EdgeInsets.symmetric(vertical: 8.0),child:     pw.Text('Item',
-                            style: pw.TextStyle(
-                              fontSize: Get.width / 26,
-                            )), ),
-                     pw.Padding(padding: const pw.EdgeInsets.symmetric(vertical: 8.0),child:     pw.Text('Price',
-                            style: pw.TextStyle(
-                              fontSize: Get.width / 26,
-                            )), ),
-
-                               pw.Padding(padding: const pw.EdgeInsets.symmetric(vertical: 8.0),child:     pw.Text('Quantity',
-                            style: pw.TextStyle(
-                              fontSize: Get.width / 26,
-                            )), ),    
-                             pw.Padding(padding: const pw.EdgeInsets.symmetric(vertical: 8.0),child:     pw.Text('Total',
-                            style: pw.TextStyle(
-                              fontSize: Get.width / 26,
-                            )), ),
-                        // pw.Text('Total',
-                        //     style: pw.TextStyle(
-                        //       fontSize: Get.width / 26,
-                        //     )),
+                        pw.Padding(
+                          padding:
+                              const pw.EdgeInsets.symmetric(vertical: 12.0),
+                          child: pw.Container(
+                              alignment: pw.Alignment.center,
+                              child: pw.Text('Item',
+                                  style: pw.TextStyle(
+                                      fontSize: Get.width / 24, font: ttf))),
+                        ),
+                        pw.Padding(
+                          padding:
+                              const pw.EdgeInsets.symmetric(vertical: 12.0),
+                          child: pw.Container(
+                              alignment: pw.Alignment.center,
+                              child: pw.Text('Price',
+                                  style: pw.TextStyle(
+                                      fontSize: Get.width / 24, font: ttf))),
+                        ),
+                        pw.Padding(
+                          padding:
+                              const pw.EdgeInsets.symmetric(vertical: 12.0),
+                          child: pw.Container(
+                              alignment: pw.Alignment.center,
+                              child: pw.Text('Quantity',
+                                  style: pw.TextStyle(
+                                      fontSize: Get.width / 24, font: ttf))),
+                        ),
+                        pw.Padding(
+                          padding:
+                              const pw.EdgeInsets.symmetric(vertical: 12.0),
+                          child: pw.Container(
+                              alignment: pw.Alignment.center,
+                              child: pw.Text('Total',
+                                  style: pw.TextStyle(
+                                      fontSize: Get.width / 24, font: ttf))),
+                        ),
+                        pw.Divider()
                       ],
                     ),
+
                     // Table data
                     ...controller.items.map((item) {
                       double totalForItem = item.price * item.quantity;
                       return pw.TableRow(
                         children: [
-                          pw.Text(item.name),
-                          pw.Text('\$${item.price.toStringAsFixed(2)}'),
-                          pw.Text(item.quantity.toString()),
-                          pw.Text('\$${totalForItem.toStringAsFixed(2)}'),
+                          pw.Padding(
+                            padding:
+                                const pw.EdgeInsets.symmetric(vertical: 10.0),
+                            child: pw.Container(
+                                alignment: pw.Alignment.center,
+                                child: pw.Text('${item.name}',
+                                    style: pw.TextStyle(
+                                      fontSize: Get.width / 26,
+                                    ))),
+                          ),
+                          pw.Padding(
+                            padding:
+                                const pw.EdgeInsets.symmetric(vertical: 10.0),
+                            child: pw.Container(
+                                alignment: pw.Alignment.center,
+                                child: pw.Text(
+                                    '\$${item.price.toStringAsFixed(2)}',
+                                    style: pw.TextStyle(
+                                      fontSize: Get.width / 26,
+                                    ))),
+                          ),
+
+                          pw.Padding(
+                            padding:
+                                const pw.EdgeInsets.symmetric(vertical: 10.0),
+                            child: pw.Container(
+                                alignment: pw.Alignment.center,
+                                child: pw.Text('\$${item.quantity.toString()}',
+                                    style: pw.TextStyle(
+                                      fontSize: Get.width / 26,
+                                    ))),
+                          ),
+                          pw.Padding(
+                            padding:
+                                const pw.EdgeInsets.symmetric(vertical: 10.0),
+                            child: pw.Container(
+                                alignment: pw.Alignment.center,
+                                child: pw.Text(
+                                    '\$${totalForItem.toStringAsFixed(2)}',
+                                    style: pw.TextStyle(
+                                      fontSize: Get.width / 26,
+                                    ))),
+                          ),
+
+                          // pw.Text('\$${totalForItem.toStringAsFixed(2)}'),
                         ],
                       );
                     }),
@@ -548,66 +634,128 @@ border: pw.TableBorder.all(width: 0
                   pw.Column(
                     children: [
                       pw.SizedBox(
-                        width: Get.width / 2.4,
+                        width: Get.width / 1.5,
                         child: pw.Padding(
                           padding: const pw.EdgeInsets.only(right: 8.0),
                           child: pw.Row(
-                            crossAxisAlignment: pw.CrossAxisAlignment.center,
-                            mainAxisAlignment:
-                                pw.MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: pw.CrossAxisAlignment.start,
+                            // mainAxisAlignment:
+                            //     pw.MainAxisAlignment.spaceAround,
                             children: [
                               pw.Text(
                                 'Subtotal',
                                 style: pw.TextStyle(
-                                  fontSize: Get.width / 26,
-                                  // fontWeight: FontWeight.w300,
-                                  // color: Colors.black.withOpacity(.5)
-                                ),
+                                    fontSize: Get.width / 26,
+                                    // fontWeight: pw.FontWeight.bold,
+                                    // fontWeight: FontWeight.w300,
+                                    // fontBold: fontData,
+                                    color: PdfColor.fromHex('#000005')),
                               ),
-                              pw.Text(
-                                '\$${controller.calculateTotal().toStringAsFixed(2)}',
-                                style: pw.TextStyle(
-                                  fontSize: Get.width / 26,
-                                  // fontWeight: FontWeight.w300,
-                                  // color: Colors.black.withOpacity(.5)
-                                ),
-                              )
+                              // pw.SizedBox(width: Get.width / 4),
+                               pw.Expanded(
+                                child: pw.Column(
+                                  crossAxisAlignment: pw.CrossAxisAlignment.end,
+                                  children: [
+                                  pw.Text(
+                                    '\$${controller.calculateTotal().toStringAsFixed(2)}',
+                                    style: pw.TextStyle(
+                                       fontSize: Get.width / 24,
+                                        // fontWeight: FontWeight.w300,
+                                        // color: Colors.black.withOpacity(.5)
+                                        ),
+                                  ),
+                                ]),
+                              ),
+                               pw. SizedBox(width: 25,)
+                            //  pw. SizedBox(width: 10,)
+                            //   pw.Text(
+                            //     '\$${controller.calculateTotal().toStringAsFixed(2)}',
+                            //     style: pw.TextStyle(
+                            //       fontSize: Get.width / 24,
+                            //       // fontWeight: FontWeight.w300,
+                            //       // color: Colors.black.withOpacity(.5)
+                            //     ),
+                            //   ),
                             ],
                           ),
                         ),
                       ),
                       pw.SizedBox(
-                        width: Get.width / 2.4,
+                        height: 5,
+                      ),
+                      pw.SizedBox(
+                        width: Get.width / 1.5,
                         child: pw.Divider(),
+                      ),
+                      pw.SizedBox(
+                        height: 5,
                       ),
 
                       pw.SizedBox(
-                        width: Get.width / 2.4,
+                        width: Get.width / 1.5,
                         child: pw.Padding(
                           padding: const pw.EdgeInsets.only(right: 8.0),
                           child: pw.Row(
-                            crossAxisAlignment: pw.CrossAxisAlignment.center,
-                            mainAxisAlignment:
-                                pw.MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: pw.CrossAxisAlignment.start,
+                            // mainAxisAlignment:
+                            //     pw.MainAxisAlignment.spaceAround,
                             children: [
                               pw.Text(
-                                'Total ',
+                                'Total',
                                 style: pw.TextStyle(
-                                  fontSize: 18.0,
-                                  // fontWeight: FontWeight.bold
-                                ),
+                                    fontSize: Get.width / 18,
+                                    // fontWeight: pw.FontWeight.bold,
+                                    // fontWeight: FontWeight.w300,
+                                    // fontBold: fontData,
+                                    color: PdfColor.fromHex('#000000'),
+                                    font: ttf),
                               ),
-                              pw.Text(
-                                '\$${controller.calculateTotal().toStringAsFixed(2)}',
-                                style: pw.TextStyle(
-                                  fontSize: 18.0,
-                                  // fontWeight: FontWeight.bold
-                                ),
+                              pw.Expanded(
+                                child: pw.Column(
+                                  crossAxisAlignment: pw.CrossAxisAlignment.end,
+                                  children: [
+                                  pw.Text(
+                                    '\$${controller.calculateTotal().toStringAsFixed(2)}',
+                                    style: pw.TextStyle(
+                                        fontSize: Get.width / 18,
+                                        // fontWeight: FontWeight.w300,
+                                        // color: Colors.black.withOpacity(.5)
+                                        font: ttf),
+                                  ),
+                                ]),
                               ),
+                             pw. SizedBox(width: 20,)
                             ],
                           ),
                         ),
-                      )
+                      ),
+                      // pw.SizedBox(
+                      //   // width: Get.width / 2.4,
+                      //   child: pw.Padding(
+                      //     padding: const pw.EdgeInsets.only(right: 8.0),
+                      //     child: pw.Row(
+                      //       crossAxisAlignment: pw.CrossAxisAlignment.center,
+                      //       mainAxisAlignment:
+                      //           pw.MainAxisAlignment.spaceBetween,
+                      //       children: [
+                      //         pw.Text(
+                      //           'Total ',
+                      //           style: pw.TextStyle(
+                      //             fontSize: 18.0,
+                      //             // fontWeight: FontWeight.bold
+                      //           ),
+                      //         ),
+                      //         pw.Text(
+                      //           '\$${controller.calculateTotal().toStringAsFixed(2)}',
+                      //           style: pw.TextStyle(
+                      //             fontSize: 18.0,
+                      //             // fontWeight: FontWeight.bold
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // )
 
                       // Obx(() => Text(
                       //       '   Total:            \$${controller.calculateTotal().toStringAsFixed(2)}',

@@ -27,7 +27,7 @@ class custome_textfield extends StatelessWidget {
               fontSize: Get.width / 22),
           cursorColor: Colors.black,
           cursorHeight: 25,
-          keyboardType: TextInputType.emailAddress ,
+          keyboardType: keyboardType ,
           // cursorHeight: 20,
           decoration: InputDecoration(
               // border: InputBorder.none,
