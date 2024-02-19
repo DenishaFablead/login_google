@@ -27,9 +27,13 @@ class InvoiceScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
+               font_(font: "Customer  NAME",color: Colors.black,fontsize: Get.width/26),
+             SizedBox(height: 5),
+             custome_textfield(Controlle: controller.customerNameController,icon:Icons.person,text: "Enter your Name ",keyboardType: TextInputType.emailAddress)
+          ,    SizedBox(height: 10.0),
                font_(font: "Customer  email",color: Colors.black,fontsize: Get.width/26),
              SizedBox(height: 5),
-             custome_textfield(Controlle: controller.customerNameController,icon:Icons.person,text: "Enter your Email ",keyboardType: TextInputType.emailAddress)
+             custome_textfield(Controlle: controller.customerEmailController,icon:Icons.person,text: "Enter your Email ",keyboardType: TextInputType.emailAddress)
           ,    SizedBox(height: 10.0),
               font_(font: "Customer  Number",color: Colors.black,fontsize: Get.width/26),
               SizedBox(height: 5),
@@ -55,7 +59,7 @@ class InvoiceScreen extends StatelessWidget {
               // ),
               InkWell(
                 onTap:  () {
-                  Get.to(item_addScreen());
+                  Get.to(SignatureFormPage());
                 },
                 child: Center(child:
                 Container(
@@ -65,49 +69,14 @@ class InvoiceScreen extends StatelessWidget {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
-                    child: Text("Item Add",style: TextStyle(
+                    child: Text("Add Signature",style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w900
                     )),
                   ),
                 ),),
               ),
-              //   Center(
-              //   child: ElevatedButton(
-              //     onPressed: () {
-              //       Get.to(item_addScreen());
-              //     },
-              //     child: Text('Item Add '),
-              //   ),
-              // ),
-              // SizedBox(height: 20.0),
-              //
-              // ElevatedButton(
-              //   onPressed: controller.addItem,
-              //   child: Text('Add Item'),
-              // ),
-              // SizedBox(height: 20.0),
-              // Obx(() => DataTable(
-              //       columns: [
-              //         DataColumn(label: Text('Item')),
-              //         DataColumn(label: Text('Price')),
-              //       ],
-              //       rows: controller.items
-              //           .map(
-              //             (item) => DataRow(
-              //               cells: [
-              //                 DataCell(Text(item.name)),
-              //                 DataCell(Text('\$${item.price.toStringAsFixed(2)}')),
-              //               ],
-              //             ),
-              //           )
-              //           .toList(),
-              //     )),
-              // SizedBox(height: 20.0),
-              // Obx(() => Text(
-              //       'Total: \$${controller.calculateTotal().toStringAsFixed(2)}',
-              //       style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-              //     )),
+         
             ],
           ),
         ),

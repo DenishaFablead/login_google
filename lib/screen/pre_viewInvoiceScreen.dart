@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,61 +13,109 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:get/get.dart' as getx;
 
 class pre_viewInvoiceScreen extends StatefulWidget {
-  const pre_viewInvoiceScreen({super.key});
-
+  const pre_viewInvoiceScreen({super.key, required this.signatureData});
+  final Uint8List signatureData;
   @override
   State<pre_viewInvoiceScreen> createState() => _pre_viewInvoiceScreenState();
 }
 
 class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
   final InvoiceController controller = Get.put(InvoiceController());
-
+int itemNumber = 0 ;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white ,
+      backgroundColor: Colors.white,
       appBar: AppBar(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            Row(
+              children: [
+                Stack(children: [
+                  Container(
+                    width: Get.width / 1.9,
+                    height: Get.width / 6,
+                  
+                    color: Colors.orangeAccent.shade700,
+                  ),
+                  Container(
+                   width: Get.width / 2,
+                    height: Get.width / 5,
+                    // transform: Matrix4.skewX(-0.4),
+                    color: Colors.orangeAccent.shade400,
+                  ),
+                  Container(
+                  width: Get.width / 2.1,
+                    height: Get.width / 4.5,
+                    // transform: Matrix4.skewX(-0.4),
+                    color: Colors.black,
+                    child: Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'COMPNAY',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: Get.width / 22,
+                            ),
+                          ),
+                          Text(
+                            'COMPNAY TAGLINE HERE',
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(.6),
+                              fontSize: Get.width / 40,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ]),
+                Expanded(
+                    child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Invoice',
+                        style: TextStyle(
+                          color: Colors.orangeAccent.shade700,
+                          fontSize: Get.width / 10,
+                        ),
+                      ),
+                      Text(
+                        'invoice NO : #12345',
+                        style: TextStyle(
+                            color: Colors.black.withOpacity(.8),
+                            fontSize: Get.width / 36,
+                            fontFamily: 'DMSerifDisplay-Regular',
+                            fontWeight: FontWeight.w900),
+                      ),
+                      Text(
+                        'Date : ${formatDate(DateTime.now())}',
+                        style: TextStyle(
+                            color: Colors.black.withOpacity(.6),
+                            fontSize: Get.width / 36,
+                            fontFamily: 'DMSerifDisplay-Regular',
+                            fontWeight: FontWeight.w400),
+                      ),
+                    ],
+                  ),
+                )),
+              ],
+            ),
+       
+
+            SizedBox(height: 20),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-              child: Row(children: [
-                Expanded(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                        width: Get.height / 8.5,
-                        height: Get.height / 8.5,
-                        child: Image.asset("aassert/image/logo.png")),
-                    SizedBox(
-                      height: Get.width / 40,
-                    ),
-                  ],
-                )),
-                Expanded(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Invoice',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: Get.width / 8,
-                          fontFamily: 'DMSerifDisplay-Regular'),
-                    ),
-                  ],
-                )),
-              ]),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
               child: Container(
                 width: Get.width,
                 child: Stack(
@@ -78,51 +125,84 @@ class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'BILLED TO :',
+                          'Invoice To:',
                           style: TextStyle(
-                              color: Colors.black,
-                              fontSize: Get.width / 16,
+                              color: Colors.orangeAccent.shade700,
+                              fontSize: Get.width / 24,
                               fontFamily: 'DMSerifDisplay-Regular',
                               fontWeight: FontWeight.w900),
                         ),
-                        font_(
-                            font: "${controller.customerNameController.text}",
-                            color: Colors.black.withOpacity(.8),
-                            fontsize: Get.width / 24),
-                        font_(
-                            font: "${controller.customerNumberController.text}",
-                            color: Colors.black.withOpacity(.8),
-                            fontsize: Get.width / 24),
-                        Container(
-                          width: Get.width / 2,
-                          child: font_(
-                              font: "${controller.customerAddrController.text}",
-                              color: Colors.black.withOpacity(.8),
-                              fontsize: Get.width / 24),
-                        )
+                        Text(
+                          '${controller.customerNameController.text}',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: Get.width / 24,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          '${controller.customerAddrController.text}',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: Get.width / 28,
+                          ),
+                        ),
+                        Text(
+                          'Phone : ${controller.customerNumberController.text}',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: Get.width / 28,
+                          ),
+                        ),
+                        Text(
+                          'Email : ${controller.customerEmailController.text}',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: Get.width / 28,
+                          ),
+                        ),
                       ],
                     ),
                     Positioned(
                         right: 0,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'invoice NO : 12345',
+                              'Invoice FROM:',
                               style: TextStyle(
-                                  color: Colors.black.withOpacity(.8),
-                                  fontSize: Get.width / 22,
+                                  color: Colors.orangeAccent.shade700,
+                                  fontSize: Get.width / 24,
                                   fontFamily: 'DMSerifDisplay-Regular',
                                   fontWeight: FontWeight.w900),
                             ),
                             Text(
-                              ' ${formatDate(DateTime.now())}',
+                              'Abc ',
                               style: TextStyle(
-                                  color: Colors.black.withOpacity(.6),
-                                  fontSize: Get.width / 26,
-                                  fontFamily: 'DMSerifDisplay-Regular',
-                                  fontWeight: FontWeight.w400),
+                                  color: Colors.black,
+                                  fontSize: Get.width / 24,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              'surat,Gujrat',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: Get.width / 28,
+                              ),
+                            ),
+                            Text(
+                              'Phone : 1234567890',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: Get.width / 28,
+                              ),
+                            ),
+                            Text(
+                              'Email : abc@gmail.com',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: Get.width / 28,
+                              ),
                             ),
                           ],
                         ))
@@ -139,40 +219,49 @@ class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
                     showBottomBorder: false,
                     dividerThickness: .0,
                     dataRowHeight: Get.height / 20,
+                    // decoration: BoxDecoration(color: Colors.black12) ,
                     border: TableBorder.all(color: Colors.white),
+
                     headingRowColor: MaterialStateColor.resolveWith((states) {
                       // You can set the color conditionally based on the state if needed
-                      return Colors.grey
-                          .shade100; // Change the color as per your preference
+                      return Colors.orangeAccent
+                          .shade400; // Change the color as per your preference
                     }),
                     columns: [
+                     
                       DataColumn(
                           label: Text(
                         'Item',
                         style: TextStyle(
+                          color: Colors.white,
                           fontFamily: 'DMSerifDisplay-Regular',
                         ),
                       )),
                       DataColumn(
                           label: Text('Price',
                               style: TextStyle(
+                                color: Colors.white,
                                 fontFamily: 'DMSerifDisplay-Regular',
                               ))),
                       DataColumn(
                           label: Text('Quantity',
                               style: TextStyle(
+                                color: Colors.white,
                                 fontFamily: 'DMSerifDisplay-Regular',
                               ))),
                       DataColumn(
                           label: Text('Total',
                               style: TextStyle(
+                                color: Colors.white,
                                 fontFamily: 'DMSerifDisplay-Regular',
                               ))),
                     ],
                     rows: controller.items.map((item) {
+                  itemNumber ++;
                       double totalForItem = item.price * item.quantity;
                       return DataRow(
                         cells: [
+                         
                           DataCell(Text(item.name)),
                           DataCell(Text('\$${item.price.toStringAsFixed(2)}')),
                           DataCell(Text(item.quantity.toString())),
@@ -204,16 +293,16 @@ class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
                                   Text(
                                     'Subtotal',
                                     style: TextStyle(
-                                        fontSize: Get.width / 26,
+                                        fontSize: Get.width / 28,
                                         fontWeight: FontWeight.w300,
-                                        color: Colors.black.withOpacity(.5)),
+                                        color: Colors.black),
                                   ),
                                   Text(
                                     '\$${controller.calculateTotal().toStringAsFixed(2)}',
                                     style: TextStyle(
                                         fontSize: Get.width / 26,
                                         fontWeight: FontWeight.w300,
-                                        color: Colors.black.withOpacity(.5)),
+                                        color: Colors.black),
                                   )
                                 ],
                               ),
@@ -224,10 +313,12 @@ class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
                         child: Divider(),
                       ),
 
-                      Obx(() => SizedBox(
+                      Obx(() => Container(
+                            color: Colors.orangeAccent.shade400,
                             width: Get.width / 2.4,
                             child: Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 4.0, horizontal: 6.0),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment:
@@ -236,14 +327,16 @@ class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
                                   Text(
                                     'Total ',
                                     style: TextStyle(
-                                        fontSize: 18.0,
+                                        fontSize: Get.width / 26,
                                         fontFamily: 'DMSerifDisplay-Regular',
+                                        color: Colors.white,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Text(
                                     '\$${controller.calculateTotal().toStringAsFixed(2)}',
                                     style: TextStyle(
-                                        fontSize: 18.0,
+                                        fontSize: Get.width / 26,
+                                        color: Colors.white,
                                         fontFamily: 'DMSerifDisplay-Regular',
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -261,21 +354,13 @@ class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
                 ],
               ),
             ),
-            SizedBox(height: 20.0),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Thank you!',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: Get.width / 14,
-                    fontFamily: 'DMSerifDisplay-Regular',
-                    fontWeight: FontWeight.w900),
-              ),
+            SizedBox(
+              height: Get.height / 50,
             ),
-            SizedBox(height: 20.0),
+
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
               child: Container(
                 width: Get.width,
                 child: Stack(
@@ -285,67 +370,117 @@ class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'PAYMENT INFORMATION',
+                          'Payment Method :',
                           style: TextStyle(
-                              color: Colors.black,
-                              fontSize: Get.width / 22,
+                              color: Colors.orangeAccent.shade700,
+                              fontSize: Get.width / 24,
                               fontFamily: 'DMSerifDisplay-Regular',
                               fontWeight: FontWeight.w900),
                         ),
-                        font_(
-                            font: "Briard Bank",
-                            color: Colors.black.withOpacity(.6),
-                            fontsize: Get.width / 24),
-                        font_(
-                            font: "Account Name: Samira Hadid",
-                            color: Colors.black.withOpacity(.6),
-                            fontsize: Get.width / 24),
-                        font_(
-                            font: "Account No.: 123-456-7890",
-                            color: Colors.black.withOpacity(.6),
-                            fontsize: Get.width / 24),
-                        font_(
-                            font: "Pay by: 5 July 2025",
-                            color: Colors.black.withOpacity(.6),
-                            fontsize: Get.width / 24),
-                        Container(
-                          width: Get.width / 2,
-                          child: font_(
-                              font: "${controller.customerAddrController.text}",
-                              color: Colors.black.withOpacity(.5),
-                              fontsize: Get.width / 24),
+                        Text(
+                          'Account no : 1234 5678 2345',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: Get.width / 32,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'Account Name : ABC',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: Get.width / 28,
+                          ),
+                        ),
+                        Text(
+                          'Branch : Briard Bank',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: Get.width / 28,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
                         )
                       ],
                     ),
                     Positioned(
-                        bottom: 20,
                         right: 0,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              'Samira Hadid',
-                              style: TextStyle(
-                                  color: Colors.black.withOpacity(.8),
-                                  fontSize: Get.width / 20,
-                                  fontFamily: 'DMSerifDisplay-Regular',
-                                  fontWeight: FontWeight.w900),
-                            ),
-                            Text(
-                              ' Any City, ST 12345',
-                              style: TextStyle(
-                                  color: Colors.black.withOpacity(.6),
-                                  fontSize: Get.width / 26,
-                                  fontFamily: 'DMSerifDisplay-Regular',
-                                  fontWeight: FontWeight.w400),
-                            ),
-                          ],
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                  height: Get.height / 20,
+                                  width: Get.width / 4,
+                                  // color: Colors.amber,
+                                  child: Image.memory(widget.signatureData)),
+                              SizedBox(
+                                height: 4,
+                              ),
+                              Container(
+                                height: 1,
+                                width: Get.width / 3.8,
+                                // color: Colors.amber,
+                                color: Colors.orangeAccent.shade200,
+                              ),
+                              SizedBox(
+                                height: 2,
+                              ),
+                              Text(
+                                'Authorised sign',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: Get.width / 32,
+                                ),
+                              ),
+                            ],
+                          ),
                         ))
                   ],
                 ),
               ),
             ),
+            SizedBox(height: 20.0),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Text(
+                'Terms & Conditions : ',
+                style: TextStyle(
+                    fontSize: Get.width / 24,
+                    fontFamily: 'DMSerifDisplay-Regular',
+                    color: Colors.orangeAccent.shade700,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'A line of credit agreement, sometimes called a line of credit.',
+                    style: TextStyle(
+                      fontSize: Get.width / 28,
+                    ),
+                  ),
+                     SizedBox(
+                    height: 2,
+                  ),
+                  Text(
+                    'The client  and as money is repaid, it can be. ',
+                    style: TextStyle(
+                      fontSize: Get.width / 28,
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
@@ -369,12 +504,12 @@ class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
   }
 
   String formatDate(DateTime date) {
-    return DateFormat("dd MMMM yyyy").format(date);
+    return DateFormat("MMMM dd yyyy").format(date);
   }
 
   Future<void> generateAndDownloadPdf() async {
     final pdf = pw.Document();
-
+int itemNumber = 0 ;
     // Get the image data as Uint8List
     final Uint8List imageData =
         await _getImageAsUint8List('aassert/image/logo.png');
@@ -389,7 +524,7 @@ class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
 
       //   )
       // ),
-      margin: pw.EdgeInsets.all(10),
+      margin: pw.EdgeInsets.all(0),
       build: (context) => pw.Container(
         width: double.infinity,
         height: Get.height,
@@ -398,108 +533,180 @@ class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
           crossAxisAlignment: pw.CrossAxisAlignment.start,
           mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
           children: [
-            pw.Padding(
+           pw.Row(
+              children: [
+               pw. Stack(children: [
+                   pw.Container(
+                    width: Get.width / 1.7,
+                    height: Get.width / 6,
+                    // transform: Matrix4.skewX(-0.4),
+                    color: PdfColor.fromHex('#FF6D00'),
+                  ),
+                 pw. Container(
+                    width: Get.width / 1.8,
+                    height: Get.width / 5,
+                    // transform: Matrix4.skewX(-0.4),
+                    color: PdfColor.fromHex('#FFAB40'),
+                  ),
+                  pw.Container(
+                    width: Get.width / 1.9,
+                    height: Get.width / 4.5,
+                    // transform: Matrix4.skewX(-0.4),
+                    color: PdfColor.fromHex('#000000'),
+                    child: pw.Container(
+                      child: pw.Column(
+                        mainAxisAlignment:pw. MainAxisAlignment.center,
+                        children: [
+                          pw.Text(
+                            'COMPNAY',
+                            style:pw. TextStyle(
+                              color: PdfColor.fromHex(
+                      '#FFFFFF'),
+                              fontSize: Get.width / 22,
+                            ),
+                          ),
+                          pw.Text(
+                            'COMPNAY TAGLINE HERE',
+                            style: pw.TextStyle(
+                              color:  PdfColor.fromHex(
+                      '#FFFFFF'),
+                              fontSize: Get.width / 40,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ]),
+               pw. Expanded(
+                    child: pw.Padding(
+                  padding: const pw.EdgeInsets.symmetric(horizontal: 16.0),
+                  child:pw. Column(
+                    mainAxisAlignment:pw. MainAxisAlignment.start,
+                    crossAxisAlignment: pw.CrossAxisAlignment.end,
+                    children: [
+                      pw.Text(
+                        'Invoice',
+                        style: pw.TextStyle(
+                          color:PdfColor.fromHex('#FF6D00'),
+                          fontSize: Get.width / 10,
+                        ),
+                      ),
+                    pw.  Text(
+                        'invoice NO : #12345',
+                        style: pw.TextStyle(
+                            color: PdfColor.fromHex('#FFAB40'),
+                            fontSize: Get.width / 36,
+                            font: ttf,
+                            fontWeight:pw. FontWeight.bold),
+                      ),
+                     pw.Text(
+                        'Date : ${formatDate(DateTime.now())}',
+                        style:pw. TextStyle(
+                            color:  PdfColor.fromHex('#000000'),
+                            fontSize: Get.width / 36,
+                            font: ttf,
+                            // fontWeight: FontWeight.w400
+                            ),
+                      ),
+                    ],
+                  ),
+                )),
+              ],
+            ),
+       
+
+             pw.SizedBox(height: 20),
+            pw. Padding(
               padding:
                   const pw.EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-              child: pw.Row(children: [
-                pw.Expanded(
-                    child: pw.Column(
-                  mainAxisAlignment: pw.MainAxisAlignment.start,
-                  crossAxisAlignment: pw.CrossAxisAlignment.start,
-                  children: [
-                    pw.Container(
-                        width: Get.height / 5,
-                        height: Get.height / 5,
-                        child: pw.Image(pw.MemoryImage(imageData))),
-                    pw.SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                )),
-                pw.Expanded(
-                    child: pw.Column(
-                  mainAxisAlignment: pw.MainAxisAlignment.start,
-                  crossAxisAlignment: pw.CrossAxisAlignment.end,
-                  children: [
-                    pw.Text(
-                      'Invoice',
-                      style: pw.TextStyle(
-                          color: PdfColor.fromHex('#000000'),
-                          fontSize: Get.width / 8,
-                          font: ttf),
-                    ),
-                  ],
-                )),
-              ]),
-            ),
-            pw.Padding(
-              padding:
-                  const pw.EdgeInsets.symmetric(vertical: 8, horizontal: 15),
               child: pw.Container(
                 width: double.infinity,
-                child: pw.Stack(
+                child:pw. Stack(
                   children: [
-                    pw.Column(
-                      mainAxisAlignment: pw.MainAxisAlignment.start,
+                   pw. Column(
+                      mainAxisAlignment:pw. MainAxisAlignment.start,
                       crossAxisAlignment: pw.CrossAxisAlignment.start,
                       children: [
-                        pw.Text(
-                          'BILLED TO :',
+                       pw. Text(
+                          'Invoice To:',
                           style: pw.TextStyle(
-                            color: PdfColor.fromHex('#000000'),
-                            fontSize: Get.width / 16,
-                            font: ttf,
-                          ),
+                              color:PdfColor.fromHex('#FF6D00'),
+                              fontSize: Get.width / 24,
+                             font: ttf,
+                              fontWeight: pw.FontWeight.bold),
                         ),
-                        pw.Text(
+                       pw. Text(
                           '${controller.customerNameController.text}',
-                          style: pw.TextStyle(
-                            color: PdfColor.fromHex('#000000'),
-                            fontSize: Get.width / 24,
+                          style:pw. TextStyle(
+                              color:  PdfColor.fromHex('#000000'),
+                              fontSize: Get.width / 24,
+                              fontWeight: pw.FontWeight.bold),
+                        ),
+                        pw.Text(
+                          '${controller.customerAddrController.text}',
+                          style:pw. TextStyle(
+                            color:  PdfColor.fromHex('#000000'),
+                            fontSize: Get.width / 28,
                           ),
                         ),
                         pw.Text(
-                          '${controller.customerNumberController.text}',
-                          style: pw.TextStyle(
-                            color: PdfColor.fromHex('#000000'),
-                            fontSize: Get.width / 24,
+                          'Phone : ${controller.customerNumberController.text}',
+                          style:pw. TextStyle(
+                            color:  PdfColor.fromHex('#000000'),
+                            fontSize: Get.width / 28,
                           ),
                         ),
-                        pw.Container(
-                          width: Get.width / 2,
-                          child: pw.Text(
-                              "${controller.customerAddrController.text}",
-                              style: pw.TextStyle(fontSize: Get.width / 24)),
-                        )
+                        pw.Text(
+                          'Email : ${controller.customerEmailController.text}',
+                          style: pw.TextStyle(
+                            color: PdfColor.fromHex('#000000'),
+                            fontSize: Get.width / 28,
+                          ),
+                        ),
                       ],
                     ),
-                    pw.Positioned(
+                   pw. Positioned(
                         right: 0,
-                        child: pw.Column(
-                          mainAxisAlignment: pw.MainAxisAlignment.end,
-                          crossAxisAlignment: pw.CrossAxisAlignment.end,
+                        child:pw. Column(
+                          mainAxisAlignment: pw.MainAxisAlignment.start,
+                          crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
                             pw.Text(
-                              'invoice NO : 12345',
+                              'Invoice FROM:',
+                              style:pw. TextStyle(
+                                  color: PdfColor.fromHex('#FF6D00'),
+                                  fontSize: Get.width / 24,
+                                  font: ttf,
+                                  fontWeight: pw.FontWeight.bold),
+                            ),
+                           pw. Text(
+                              'Abc ',
                               style: pw.TextStyle(
-                                  color: PdfColor.fromHex('#000000'),
-                                  // color: Colors.black.withOpacity(.8),
-                                  fontSize: Get.width / 22,
-                                  font: ttf
-                                  // fontFamily: 'DMSerifDisplay-Regular',
-                                  // fontWeight: FontWeight.w900
-                                  ),
+                                  color:  PdfColor.fromHex('#000000'),
+                                  fontSize: Get.width / 24,
+                                  fontWeight: pw.FontWeight.bold),
+                            ),
+                          pw.  Text(
+                              'surat,Gujrat',
+                              style:pw. TextStyle(
+                                color:  PdfColor.fromHex('#000000'),
+                                fontSize: Get.width / 28,
+                              ),
+                            ),
+                           pw. Text(
+                              'Phone : 1234567890',
+                              style:pw. TextStyle(
+                                color:  PdfColor.fromHex('#000000'),
+                                fontSize: Get.width / 28,
+                              ),
                             ),
                             pw.Text(
-                              ' ${formatDate(DateTime.now())}',
+                              'Email : abc@gmail.com',
                               style: pw.TextStyle(
-                                  // color: Colors.black.withOpacity(.6),
-                                  color: PdfColor.fromHex('#000000'),
-                                  fontSize: Get.width / 26,
-                                  font: ttf
-                                  // fontFamily: 'DMSerifDisplay-Regular',
-                                  // fontWeight: FontWeight.w400
-                                  ),
+                                color: PdfColor.fromHex('#000000'),
+                                fontSize: Get.width / 28,
+                              ),
                             ),
                           ],
                         ))
@@ -507,16 +714,14 @@ class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
                 ),
               ),
             ),
-            pw.SizedBox(
-              height: 5,
-            ),
+    
             pw.Padding(
               padding: const pw.EdgeInsets.symmetric(horizontal: 8.0),
               child: pw.Container(
-                decoration: pw.BoxDecoration(
-                  color: PdfColor.fromHex(
-                      '#FFFFFF'), // Background color of the table
-                ),
+                // decoration: pw.BoxDecoration(
+                //   color: PdfColor.fromHex(
+                //       '#FFFFFF'), // Background color of the table
+                // ),
                 child: pw.Table(
                   tableWidth: pw.TableWidth.max,
                   border:
@@ -528,51 +733,74 @@ class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
                         color: PdfColor.fromHex('#F5F5Ff'),
                       ),
                       children: [
-                        pw.Padding(
+                         pw.Container(
+                            alignment: pw.Alignment.center,
+                            color: PdfColor.fromHex('#FFAB40'),
+                            child: pw.Padding(
                           padding:
-                              const pw.EdgeInsets.symmetric(vertical: 12.0),
-                          child: pw.Container(
-                              alignment: pw.Alignment.center,
-                              child: pw.Text('Item',
-                                  style: pw.TextStyle(
-                                      fontSize: Get.width / 24, font: ttf))),
-                        ),
-                        pw.Padding(
+                              const pw.EdgeInsets.symmetric(vertical: 12.0),child: pw.Text('No.',
+                                style: pw.TextStyle(
+                                    fontSize: Get.width / 24, font: ttf,color:  PdfColor.fromHex(
+                                              '#FFFFFF')))),),
+
+                        pw.Container(
+                            alignment: pw.Alignment.center,
+                            color: PdfColor.fromHex('#FFAB40'),
+                            child: pw.Padding(
                           padding:
-                              const pw.EdgeInsets.symmetric(vertical: 12.0),
-                          child: pw.Container(
-                              alignment: pw.Alignment.center,
-                              child: pw.Text('Price',
-                                  style: pw.TextStyle(
-                                      fontSize: Get.width / 24, font: ttf))),
-                        ),
-                        pw.Padding(
+                              const pw.EdgeInsets.symmetric(vertical: 12.0),child: pw.Text('Item Name ',
+                                style: pw.TextStyle(
+                                    fontSize: Get.width / 24, font: ttf,color:  PdfColor.fromHex(
+                                              '#FFFFFF')))),),
+
+                                                pw.Container(
+                            alignment: pw.Alignment.center,
+                            color: PdfColor.fromHex('#000000'),
+                            child: pw.Padding(
                           padding:
-                              const pw.EdgeInsets.symmetric(vertical: 12.0),
-                          child: pw.Container(
-                              alignment: pw.Alignment.center,
-                              child: pw.Text('Quantity',
-                                  style: pw.TextStyle(
-                                      fontSize: Get.width / 24, font: ttf))),
-                        ),
-                        pw.Padding(
+                              const pw.EdgeInsets.symmetric(vertical: 12.0),child: pw.Text('Price',
+                                style: pw.TextStyle(
+                                    fontSize: Get.width / 24, font: ttf,color:  PdfColor.fromHex(
+                                              '#FFFFFF')))),),
+                 
+                          pw.Container(
+                            alignment: pw.Alignment.center,
+                            color: PdfColor.fromHex('#000000'),
+                            child: pw.Padding(
                           padding:
-                              const pw.EdgeInsets.symmetric(vertical: 12.0),
-                          child: pw.Container(
-                              alignment: pw.Alignment.center,
-                              child: pw.Text('Total',
-                                  style: pw.TextStyle(
-                                      fontSize: Get.width / 24, font: ttf))),
-                        ),
-                        pw.Divider()
+                              const pw.EdgeInsets.symmetric(vertical: 12.0),child: pw.Text('Quantity',
+                                style: pw.TextStyle(
+                                    fontSize: Get.width / 24, font: ttf,color:  PdfColor.fromHex(
+                                              '#FFFFFF')))),),
+                    
+                          pw.Container(
+                            alignment: pw.Alignment.center,
+                            color: PdfColor.fromHex('#000000'),
+                            child: pw.Padding(
+                          padding:
+                              const pw.EdgeInsets.symmetric(vertical: 12.0),child: pw.Text('Total',
+                                style: pw.TextStyle(
+                                    fontSize: Get.width / 24, font: ttf,color:  PdfColor.fromHex('#FFFFFF')))),),
+                      
                       ],
                     ),
 
                     // Table data
                     ...controller.items.map((item) {
+                    itemNumber++;
                       double totalForItem = item.price * item.quantity;
                       return pw.TableRow(
                         children: [
+                              pw.Padding(
+                            padding:
+                                const pw.EdgeInsets.symmetric(vertical: 10.0),
+                            child: pw.Container(
+                                alignment: pw.Alignment.center,
+                                child: pw.Text('${itemNumber}',
+                                    style: pw.TextStyle(
+                                      fontSize: Get.width / 26,
+                                    ))),
+                          ),
                           pw.Padding(
                             padding:
                                 const pw.EdgeInsets.symmetric(vertical: 10.0),
@@ -600,7 +828,7 @@ class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
                                 const pw.EdgeInsets.symmetric(vertical: 10.0),
                             child: pw.Container(
                                 alignment: pw.Alignment.center,
-                                child: pw.Text('\$${item.quantity.toString()}',
+                                child: pw.Text('${item.quantity.toString()}',
                                     style: pw.TextStyle(
                                       fontSize: Get.width / 26,
                                     ))),
@@ -619,7 +847,9 @@ class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
 
                           // pw.Text('\$${totalForItem.toStringAsFixed(2)}'),
                         ],
+                        
                       );
+                    
                     }),
                   ],
                 ),
@@ -652,30 +882,33 @@ class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
                                     color: PdfColor.fromHex('#000005')),
                               ),
                               // pw.SizedBox(width: Get.width / 4),
-                               pw.Expanded(
+                              pw.Expanded(
                                 child: pw.Column(
-                                  crossAxisAlignment: pw.CrossAxisAlignment.end,
-                                  children: [
-                                  pw.Text(
-                                    '\$${controller.calculateTotal().toStringAsFixed(2)}',
-                                    style: pw.TextStyle(
-                                       fontSize: Get.width / 24,
-                                        // fontWeight: FontWeight.w300,
-                                        // color: Colors.black.withOpacity(.5)
+                                    crossAxisAlignment:
+                                        pw.CrossAxisAlignment.end,
+                                    children: [
+                                      pw.Text(
+                                        '\$${controller.calculateTotal().toStringAsFixed(2)}',
+                                        style: pw.TextStyle(
+                                          fontSize: Get.width / 24,
+                                          // fontWeight: FontWeight.w300,
+                                          // color: Colors.black.withOpacity(.5)
                                         ),
-                                  ),
-                                ]),
+                                      ),
+                                    ]),
                               ),
-                               pw. SizedBox(width: 25,)
-                            //  pw. SizedBox(width: 10,)
-                            //   pw.Text(
-                            //     '\$${controller.calculateTotal().toStringAsFixed(2)}',
-                            //     style: pw.TextStyle(
-                            //       fontSize: Get.width / 24,
-                            //       // fontWeight: FontWeight.w300,
-                            //       // color: Colors.black.withOpacity(.5)
-                            //     ),
-                            //   ),
+                              pw.SizedBox(
+                                width: 25,
+                              )
+                              //  pw. SizedBox(width: 10,)
+                              //   pw.Text(
+                              //     '\$${controller.calculateTotal().toStringAsFixed(2)}',
+                              //     style: pw.TextStyle(
+                              //       fontSize: Get.width / 24,
+                              //       // fontWeight: FontWeight.w300,
+                              //       // color: Colors.black.withOpacity(.5)
+                              //     ),
+                              //   ),
                             ],
                           ),
                         ),
@@ -691,14 +924,16 @@ class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
                         height: 5,
                       ),
 
-                      pw.SizedBox(
-                        width: Get.width / 1.5,
-                        child: pw.Padding(
-                          padding: const pw.EdgeInsets.only(right: 8.0),
-                          child: pw.Row(
-                            crossAxisAlignment: pw.CrossAxisAlignment.start,
-                            // mainAxisAlignment:
-                            //     pw.MainAxisAlignment.spaceAround,
+                      pw.  Container(
+                            color:PdfColor.fromHex('#FFAB40'),
+                            width: 250,
+                            child: pw.Padding(
+                              padding: const pw. EdgeInsets.symmetric(
+                                  vertical: 4.0, horizontal: 6.0),
+                              child:pw.Row (
+                                  crossAxisAlignment:pw. CrossAxisAlignment.center,
+                                mainAxisAlignment:pw.
+                                    MainAxisAlignment.spaceBetween,
                             children: [
                               pw.Text(
                                 'Total',
@@ -707,153 +942,166 @@ class _pre_viewInvoiceScreenState extends State<pre_viewInvoiceScreen> {
                                     // fontWeight: pw.FontWeight.bold,
                                     // fontWeight: FontWeight.w300,
                                     // fontBold: fontData,
-                                    color: PdfColor.fromHex('#000000'),
+                                    color: PdfColor.fromHex('#ffffff'),
                                     font: ttf),
                               ),
                               pw.Expanded(
                                 child: pw.Column(
-                                  crossAxisAlignment: pw.CrossAxisAlignment.end,
-                                  children: [
-                                  pw.Text(
-                                    '\$${controller.calculateTotal().toStringAsFixed(2)}',
-                                    style: pw.TextStyle(
-                                        fontSize: Get.width / 18,
-                                        // fontWeight: FontWeight.w300,
-                                        // color: Colors.black.withOpacity(.5)
-                                        font: ttf),
-                                  ),
-                                ]),
+                                    crossAxisAlignment:
+                                        pw.CrossAxisAlignment.end,
+                                    children: [
+                                      pw.Text(
+                                        '\$${controller.calculateTotal().toStringAsFixed(2)}',
+                                        style: pw.TextStyle(
+                                            fontSize: Get.width / 18,
+                                            // fontWeight: FontWeight.w300,
+                                          color: PdfColor.fromHex('#ffffff'),
+                                            font: ttf),
+                                      ),
+                                    ]),
                               ),
-                             pw. SizedBox(width: 20,)
+                              pw.SizedBox(
+                                width: 20,
+                              )
                             ],
                           ),
                         ),
                       ),
-                      // pw.SizedBox(
-                      //   // width: Get.width / 2.4,
-                      //   child: pw.Padding(
-                      //     padding: const pw.EdgeInsets.only(right: 8.0),
-                      //     child: pw.Row(
-                      //       crossAxisAlignment: pw.CrossAxisAlignment.center,
-                      //       mainAxisAlignment:
-                      //           pw.MainAxisAlignment.spaceBetween,
-                      //       children: [
-                      //         pw.Text(
-                      //           'Total ',
-                      //           style: pw.TextStyle(
-                      //             fontSize: 18.0,
-                      //             // fontWeight: FontWeight.bold
-                      //           ),
-                      //         ),
-                      //         pw.Text(
-                      //           '\$${controller.calculateTotal().toStringAsFixed(2)}',
-                      //           style: pw.TextStyle(
-                      //             fontSize: 18.0,
-                      //             // fontWeight: FontWeight.bold
-                      //           ),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // )
-
-                      // Obx(() => Text(
-                      //       '   Total:            \$${controller.calculateTotal().toStringAsFixed(2)}',
-                      //       style: TextStyle(
-                      //           fontSize: 18.0, fontWeight: FontWeight.bold),
-                      //     )),
+         
                     ],
                   )
                 ],
               ),
             ),
             pw.SizedBox(height: 20.0),
-            pw.Padding(
-              padding: const pw.EdgeInsets.all(8.0),
-              child: pw.Text(
-                'Thank you!',
-                style: pw.TextStyle(
-                    color: PdfColor.fromHex('#000000'),
-                    fontSize: Get.width / 12,
-                    // fontFamily: 'DMSerifDisplay-Regular',
-                    // fontWeight: FontWeight.w900,
-                    font: ttf),
-              ),
-            ),
-            pw.SizedBox(height: 20.0),
-            pw.Padding(
+          
+           pw. Padding(
               padding:
                   const pw.EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-              child: pw.Container(
+              child:pw. Container(
                 width: double.infinity,
-                child: pw.Stack(
+                child:pw. Stack(
                   children: [
                     pw.Column(
-                      mainAxisAlignment: pw.MainAxisAlignment.start,
-                      crossAxisAlignment: pw.CrossAxisAlignment.start,
+                      mainAxisAlignment:pw. MainAxisAlignment.start,
+                      crossAxisAlignment: pw. CrossAxisAlignment.start,
                       children: [
+                     pw.   Text(
+                          'Payment Method :',
+                          style:pw. TextStyle(
+                              color: PdfColor.fromHex('#FF6D00'),
+                              fontSize: Get.width / 24,
+                              font: ttf,
+                              fontWeight:pw. FontWeight.bold),
+                        ),
+                       pw. Text(
+                          'Account no : 1234 5678 2345',
+                          style:pw. TextStyle(
+                              color:  PdfColor.fromHex('#000000'),
+                              fontSize: Get.width / 32,
+                              fontWeight: pw.FontWeight.bold),
+                        ),
                         pw.Text(
-                          'PAYMENT INFORMATION',
+                          'Account Name : ABC',
                           style: pw.TextStyle(
-                              color: PdfColor.fromHex('#000000'),
-                              fontSize: Get.width / 22,
-                              font: ttf
-                              // fontFamily: 'DMSerifDisplay-Regular',
-                              // fontWeight: FontWeight.w900
-                              ),
+                            color:PdfColor.fromHex('#000000'),
+                            fontSize: Get.width / 28,
+                          ),
                         ),
-                        pw.Text(
-                          "Briard Bank",
-                          style: pw.TextStyle(fontSize: Get.width / 24),
+                       pw. Text(
+                          'Branch : Briard Bank',
+                          style:pw. TextStyle(
+                            color:PdfColor.fromHex('#000000'),
+                            fontSize: Get.width / 28,
+                          ),
                         ),
-                        pw.Text("Account Name: Samira Hadid",
-                            style: pw.TextStyle(fontSize: Get.width / 24)),
-                        pw.Text("Account No.: 123-456-7890",
-                            style: pw.TextStyle(fontSize: Get.width / 24)),
-                        pw.Text("Pay by: 5 July 2025",
-                            style: pw.TextStyle(fontSize: Get.width / 24)),
-                        pw.Container(
-                          width: Get.width / 2,
-                          child: pw.Text(
-                              "${controller.customerAddrController.text}",
-                              style: pw.TextStyle(fontSize: Get.width / 24)),
+                       pw. SizedBox(
+                          height: 5,
                         )
                       ],
                     ),
                     pw.Positioned(
-                        bottom: 20,
                         right: 0,
-                        child: pw.Column(
-                          mainAxisAlignment: pw.MainAxisAlignment.end,
-                          crossAxisAlignment: pw.CrossAxisAlignment.end,
-                          children: [
-                            pw.Text(
-                              'Samira Hadid',
-                              style: pw.TextStyle(
-                                color: PdfColor.fromHex('#000000'),
-                                // color: Colors.black.withOpacity(.8),
-                                fontSize: Get.width / 20,
-                                // fontFamily: 'DMSerifDisplay-Regular',
-                                // fontWeight: FontWeight.w900
-                                font: ttf,
+                        child: pw.Padding(
+                          padding: const pw.EdgeInsets.all(8.0),
+                          child:pw. Column(
+                            mainAxisAlignment: pw.MainAxisAlignment.start,
+                            crossAxisAlignment:pw. CrossAxisAlignment.center,
+                            children: [
+                              pw.Container(
+                                  height: Get.height / 20,
+                                  width: Get.width / 4,
+                                  // color: Colors.amber,
+                                  child: pw.Image(pw.MemoryImage(widget.signatureData))
+                                  
+                                  ),
+                              pw.SizedBox(
+                                height: 4,
                               ),
-                            ),
-                            pw.Text(
-                              ' Any City, ST 12345',
-                              style: pw.TextStyle(
+                             pw. Container(
+                                height: 1,
+                                width: Get.width / 3.8,
+                                // color: Colors.amber,
+                                color: PdfColor.fromHex('#FF6D00'),
+                              ),
+                             pw. SizedBox(
+                                height: 2,
+                              ),
+                             pw. Text(
+                                'Authorised sign',
+                                style: pw.TextStyle(
                                   color: PdfColor.fromHex('#000000'),
-                                  // color: Colors.black.withOpacity(.6),
-                                  fontSize: Get.width / 26,
-                                  // fontFamily: 'DMSerifDisplay-Regular',
-                                  // fontWeight: FontWeight.w400
-                                  font: ttf),
-                            ),
-                          ],
+                                  fontSize: Get.width / 32,
+                                ),
+                              ),
+                            ],
+                          ),
                         ))
                   ],
                 ),
               ),
             ),
+           pw. SizedBox(height: 20.0),
+          pw. Padding(
+              padding: const pw.EdgeInsets.symmetric(horizontal: 15.0),
+              child:pw. Text(
+                'Terms & Conditions : ',
+                style:pw. TextStyle(
+                    fontSize: Get.width / 24,
+                    font: ttf,
+                    color:PdfColor.fromHex('#FF6D00'),
+                    fontWeight: pw.FontWeight.bold),
+              ),
+            ),
+      
+            // pw.SizedBox(height: 20.0),
+          pw. Padding(
+              padding: const pw.EdgeInsets.symmetric(horizontal: 15.0),
+              child: pw.Column(
+                mainAxisAlignment:pw. MainAxisAlignment.start,
+                crossAxisAlignment:pw. CrossAxisAlignment.start,
+                children: [
+                //  pw. SizedBox(
+                //     height: 5,
+                //   ),
+                 pw. Text(
+                    'A line of credit agreement, sometimes called a line of credit.',
+                    style:pw. TextStyle(
+                      fontSize: Get.width / 28,
+                    ),
+                  ),
+                    pw. SizedBox(
+                    height: 2,
+                  ),
+                pw.  Text(
+                    'The client  and as money is repaid, it can be. ',
+                    style: pw.TextStyle(
+                      fontSize: Get.width / 28,
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),

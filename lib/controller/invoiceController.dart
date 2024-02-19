@@ -40,6 +40,7 @@ class InvoiceController extends GetxController {
   var items = <InvoiceItem>[].obs;
   
   TextEditingController customerNameController = TextEditingController();
+   TextEditingController customerEmailController = TextEditingController();
   TextEditingController customerNumberController = TextEditingController();
   TextEditingController customerAddrController = TextEditingController();
   TextEditingController itemNameController = TextEditingController();
